@@ -1,6 +1,6 @@
-sudo:false
-dist:trusty
-language:java
+language: java
+sudo: false
+dist: trusty
 
 addons:
   sonarcloud:
