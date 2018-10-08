@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MS_FOLDER=sonar-scanner-msbuild-4.3.1.1372-netcoreapp2.0
-
+MS_FOLDER=sonar-scanner-msbuild-4.4.0.1504-net46
+WRAPPER=build-wrapper-win-x86
 chmod +x ./$MS_FOLDER/ -R
 
 #ls /usr/bin/mono/
@@ -10,7 +10,6 @@ chmod +x ./$MS_FOLDER/ -R
 #mono ./$MS_FOLDER/SonarScanner.MSBuild.exe end
 
 pwd
-dotnet ./$MS_FOLDER/SonarScanner.MSBuild.dll begin /k:"FlowTest"
-#dotnet build -f netcoreapp2.0 CIEN_TutoProject_Stone.sln
-dotnet msbuild /p:TargetFramework=net35 Assembly-CSharp.csproj 
-dotnet ./$MS_FOLDER/SonarScanner.MSBuild.dll end
+./$MS_FOLDER/SonarQube.Scanner.MSBuild.exe begin /k:"SibaDoge1_FlowTest" /d:sonar.organization="sibadoge1-github" /d:sonar.cfamily.build-wrapper-output=bw-output /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
+./WRAPPER/build-wrapper-win-x86-64.exe --out-dir bw-output MsBuild.exe /t:Rebuild
+./$MS_FOLDER/SonarQube.Scanner.MSBuild.exe end /d:sonar.login="$SONAR_TOKEN"

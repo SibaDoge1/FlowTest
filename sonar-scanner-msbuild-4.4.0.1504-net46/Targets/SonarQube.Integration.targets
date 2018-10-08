@@ -378,11 +378,16 @@
   <Target Name="SetRoslynCodeAnalysisProperties">
 
     <!-- Fetch the relevant settings from the config file -->
-    <GetAnalyzerSettings AnalysisConfigDir="$(SonarQubeConfigPath)" Language="$(SQLanguage)" OriginalAdditionalFiles="@(AdditionalFiles)">
+    <GetAnalyzerSettings AnalysisConfigDir="$(SonarQubeConfigPath)"
+                         Language="$(SQLanguage)"
+                         CurrentProjectDirectoryPath="$(MSBuildProjectDirectory)"
+                         OriginalAnalyzers="@(Analyzer)"
+                         OriginalAdditionalFiles="@(AdditionalFiles)"
+                         OriginalRulesetFilePath="$(ResolvedCodeAnalysisRuleset)"
+                         ProjectSpecificConfigDirectory="$(ProjectSpecificConfDir)">
       <Output TaskParameter="RuleSetFilePath" PropertyName="SQRuleSetFilePath" />
       <Output TaskParameter="AnalyzerFilePaths" ItemName="SQAnalyzerFilePaths" />
-      <Output TaskParameter="AdditionalFiles" ItemName="SQAdditionalFiles" />
-      <Output TaskParameter="AdditionalFilesToRemove" ItemName="SQAdditionalFilesToRemove" />
+      <Output TaskParameter="AdditionalFilePaths" ItemName="SQAdditionalFiles" />
     </GetAnalyzerSettings>
 
     <PropertyGroup>
@@ -400,11 +405,11 @@
     </WriteLinesToFile>
 
     <ItemGroup>
-      <!-- Remove any existing analyzers and additional files -->
+      <!-- Clear the original set of analyzers and additional files -->
       <Analyzer Remove="@(Analyzer)" />
-      <AdditionalFiles Remove="@(SQAdditionalFilesToRemove)" />
+      <AdditionalFiles Remove="@(AdditionalFiles)" />
 
-      <!-- Add specified analyzers and additional files (if any) -->
+      <!-- Use the set of analyzers and additional files calculated by the GetAnalyzerSettings task -->
       <Analyzer Include="@(SQAnalyzerFilePaths)" />
       <AdditionalFiles Include="@(SQAdditionalFiles)" />
       <AdditionalFiles Include="$(ProjectConfFilePath)" />
