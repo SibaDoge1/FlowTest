@@ -9,7 +9,7 @@ chmod +x ./$MS_FOLDER/ -R
 #xbuild CIEN_TutoProject_Stone.sln
 #mono ./$MS_FOLDER/SonarScanner.MSBuild.exe end
 
-
+pwd
 dotnet ./$MS_FOLDER/SonarScanner.MSBuild.dll begin /k:"FlowTest"
 #dotnet build -f netcoreapp2.0 CIEN_TutoProject_Stone.sln
 dotnet msbuild /p:TargetFramework=net35 Assembly-CSharp.csproj 
