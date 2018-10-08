@@ -11,5 +11,5 @@ chmod +x ./$MS_FOLDER/ -R
 
 pwd
 ./$MS_FOLDER/SonarQube.Scanner.MSBuild.exe begin /k:"SibaDoge1_FlowTest" /d:sonar.organization="sibadoge1-github" /d:sonar.cfamily.build-wrapper-output=bw-output /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="$SONAR_TOKEN"
-./WRAPPER/build-wrapper-win-x86-64.exe --out-dir bw-output MsBuild.exe /t:Rebuild
+./$WRAPPER/build-wrapper-win-x86-64.exe --out-dir bw-output MsBuild.exe /t:Rebuild
 ./$MS_FOLDER/SonarQube.Scanner.MSBuild.exe end /d:sonar.login="$SONAR_TOKEN"
