@@ -1,0 +1,17 @@
+sudo:false
+dist:trusty
+language:java
+
+addons:
+  sonarcloud:
+    organization: "sibadoge1-github" # the key of the org you chose at step #3
+    token:
+      secure: "$SONAR_TOKEN" # encrypted value of your token
+
+before_install:
+- chmod a+x ./Scripts/MSBuild.sh
+
+#install:
+script:
+- ./Scripts/MSBuild.sh
+- sonar-scanner

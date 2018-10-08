@@ -1,0 +1,40 @@
+Download and unzip the Scanner for MSBuild
+And add the executable's directory to the %PATH% environment variable
+https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild
+
+Execute the Scanner for MSBuild from your computer
+Running a SonarCloud analysis is straighforward. You just need to execute the following commands at the root of your solution.
+
+SonarScanner.MSBuild.exe begin /k:"SF_TimeScale" /d:sonar.organization="sibadoge1-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="58966707d3bf6920fcacf75e26b8a8fa66c5c5e4"
+MsBuild.exe /t:Rebuild
+SonarScanner.MSBuild.exe end /d:sonar.login="58966707d3bf6920fcacf75e26b8a8fa66c5c5e4"
+
+https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild
+
+
+matrix:
+  include:
+    - language: csharp
+
+      addons:
+        sonarcloud:
+          organization: "sibadoge1-github" # the key of the org you chose at step #3
+          token:
+            secure: "$SONAR_TOKEN" # encrypted value of your token
+
+      before_install:
+        - chmod a+x ./Scripts/MSBuild.sh
+      script:
+        - ./Scripts/MSBuild.sh
+
+    - language: objective-c
+      osx_image: xcode8.3
+      before_install:
+        - chmod a+x ./Scripts/install.sh
+        - chmod a+x ./Scripts/build.sh
+        - chmod a+x ./Scripts/MSBuild.sh
+
+      install:
+        - ./Scripts/install.sh
+      script:
+        - ./Scripts/build.sh
