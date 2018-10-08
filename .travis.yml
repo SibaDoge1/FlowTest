@@ -1,7 +1,5 @@
 language: java
-sudo: false
 dist: trusty
-dotnet: 2.0.0
 
 addons:
   sonarcloud:
@@ -15,3 +13,5 @@ before_install:
 script:
 #- ./Scripts/MSBuild.sh
 - sonar-scanner
+# other script steps might be done before running the actual analysis
+# - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
